@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ProjectMapper">
+	<select id="getProjectListByFilterValue" resultMap="projectMap.projectResultMap" resultType="list">
+        <![CDATA[
+        	select id,name,shortname,starttime,endtime,status from project where (shortname like #{filterValue} or name like #{filterValue}) and showtype = '1'
+        ]]>
+    </select>
+
+	<insert id="addProject" parameterType="project">
+        insert into project(name, shortname, starttime, endtime, status, otherinfo, createtime, updatetime, showtype)
+        values(#{name}, #{shortname}, #{starttime}, #{endtime}, '1', #{otherinfo}, varchar(current_timestamp), varchar(current_timestamp), '1')
+    </insert>
+    
+    <select id="getProjectList" resultMap="projectMap.projectResultMap" resultType="list">
+        <![CDATA[
+        	SELECT tmp.id,tmp.name,tmp.shortname,tmp.starttime,tmp.endtime,tmp.status,tmp.otherinfo,tmp.createtime,tmp.updatetime FROM (SELECT ROW_NUMBER() OVER() AS R, id, name, shortname, starttime, endtime, status, otherinfo, createtime, updatetime, showtype FROM project where 1=1 order by ${orderValue}) AS tmp WHERE R > #{startIndex} and R <= #{endIndex} and (tmp.name like #{filterValue} or tmp.shortname like #{filterValue}) and tmp.showtype = '1'
+        ]]>
+    </select>
+    
+    <select id="getTotalCount" resultType="int">
+        <![CDATA[
+        	SELECT count(tmp.id) FROM (SELECT ROW_NUMBER() OVER() AS R, id, name, shortname, starttime, endtime, status, otherinfo, createtime, updatetime, showtype FROM project where 1=1 order by TIMESTAMP(updatetime) desc) AS tmp WHERE (tmp.name like #{filterValue} or tmp.shortname like #{filterValue}) and tmp.showtype = '1'
+        ]]>
+    </select>
+    
+    <select id="getProjectByProjectId" resultType="project">
+        <![CDATA[
+        	SELECT id, name, shortname, starttime, endtime, status, otherinfo, createtime, updatetime FROM project where id = #{projectId}
+        ]]>
+    </select>
+    
+    <update id="removeProjects" parameterType="java.util.List">
+    	 update project set
+        showtype = '0',
+        updatetime = varchar(current_timestamp)  
+        where id in 
+          <foreach collection="list" index="index" item="tag" open="(" separator="," close=")">
+		    #{tag}
+		  </foreach>
+    </update>
+    
+    <update id="editProject" parameterType="project">
+        update project set
+        name = #{name},
+        shortname = #{shortname},
+        starttime = #{starttime},
+        endtime = #{endtime},
+        otherinfo = #{otherinfo},
+        status = #{status},
+        updatetime = varchar(current_timestamp)  
+        where id = #{id}
+    </update>
+</mapper>

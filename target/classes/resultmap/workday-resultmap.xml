@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="workdayMap">
+    <resultMap type="com.entity.Workday" id="workdayResultMap">
+        <result property="buildingsiteid" column="buildingsiteid"/>
+        <result property="builderid" column="builderid"/>
+        <result property="projectid" column="projectid"/>
+        <result property="buildinfo" column="buildinfo"/>
+        <result property="workyear" column="workyear"/>
+        <result property="workmonth" column="workmonth"/>
+        <result property="workday" column="workday"/>
+        <result property="workdate" column="workdate"/>
+        <result property="workcount" column="workcount"/>
+        <result property="otherinfo" column="otherinfo"/>
+        <result property="createtime" column="createtime"/>
+        <result property="updatetime" column="updatetime"/>
+    </resultMap>
+</mapper>

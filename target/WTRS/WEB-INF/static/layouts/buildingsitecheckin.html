@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>人工工时核算系统 -- 工地录入</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />    
+    
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    
+    <!-- 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet" />
+     -->
+    
+    <link href="static/css/font-awesome.css" rel="stylesheet" />
+    
+    <link href="static/css/adminia.css" rel="stylesheet" /> 
+    <link href="static/css/adminia-responsive.css" rel="stylesheet" /> 
+    
+    <link href="static/css/pages/dashboard.css" rel="stylesheet" /> 
+    
+	<link href="static/css/datepicker.css" rel="stylesheet" />
+	
+	<link href="static/css/bootstrap-switch.css" rel="stylesheet" />
+	
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+	<link href="static/css/base.css" rel="stylesheet" /> 
+	
+	<link rel="icon" href="favicon.ico" type="image/x-icon" /> 
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+	
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
+
+<body>
+	
+
+
+<#include "../widgets/header.html"/> 
+
+
+<div id="content">
+	
+	<div class="container">
+		
+		<div class="row">
+			
+			<div id="leftwidget">
+			<#include "../widgets/leftnavigation.html"/> 
+			</div>
+			
+			<div class="span9" id="rightwidget">
+				<h1 class="page-title">
+					<i class="icon-chevron-left" onclick="changePage(this)" style="cursor: pointer;"></i>
+					工地录入		
+				</h1>
+				
+				<div class="container-fluid">
+					<div class="row-fluid">
+						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline" role="grid">
+							<div class="row-fluid">
+								<div class="span4">
+									<div class="dataTables_filter" id="DataTables_Table_0_filter">
+										<label>过滤: <input placeholder="工地名/缩写/地址" type="text" aria-controls="DataTables_Table_0" style="width:130px;" id="filterValueInput"></label>
+										<a class="btn btn-info" href="javascript:loadPage('${pageWidget.currentPage}', 'loadPageForBuildingsite', 'checkin');">
+											搜索
+											<i class="icon-search"></i>								
+										</a>
+									</div>
+								</div>
+								
+								<div class="span8">
+									<div id="DataTables_Table_0_length" class="dataTables_length">
+										<label style="float:right">
+											<select id="pageSizeSelect" size="1" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" style="width:80px;" onchange="loadPage('${pageWidget.currentPage}', 'loadPageForBuildingsite', 'checkin')">
+												<option value="10" selected="selected">10</option>
+												<option value="20">20</option>
+												<option value="60">60</option>
+												<option value="100">100</option>
+												<option value="-1">全部</option>
+											</select>
+											 记录/页
+										</label>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row-fluid">
+								<div class="span12">
+									<a class="btn btn-success" href="javascript:openWidget('addBuildingsiteWidget');">
+											新增
+											<i class="icon-plus"></i>								
+									</a>
+											
+									<a class="btn btn-success" href="javascript:reStartEntryByIds('','reStartBuildingsites.html','buildingsiteIds');">
+											多选启用
+											<i class="icon-ok"></i>		
+									</a>
+									
+									
+									<a class="btn btn-danger" href="javascript:deleteEntryByIds('','removeBuildingsites.html','buildingsiteIds');">
+											多选禁用
+											<i class="icon-remove"></i>		
+									</a>
+									
+									<input data-size="small" data-handle-width="50" data-on-text="启用" data-off-text="禁用" data-on-color="success" data-off-color="danger" id="buildingsiteshowtype" type="checkbox" checked />
+								</div>
+							</div>
+							
+							<br/>
+						
+						<input type="hidden" id="loadPageForBuildingsite_ordervalue" value=""/>
+						
+						<div id="buildingsitecheckin_grid_div">
+						<#include "../grids/buildingsitecheckin_grid.html"/> 
+						</div>
+						
+					</div>
+				</div>
+				
+			</div> <!-- /span9 -->
+			
+			
+		</div> <!-- /row -->
+		
+	</div> <!-- /container -->
+	
+</div> <!-- /content -->
+					
+	
+
+<#include "../widgets/footer.html"/> 
+
+
+											<div class="modal hide in" id="addBuildingsiteWidget" style="display: none;" aria-hidden="false">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" onclick="closeWidget('addBuildingsiteWidget')">×</button>
+													<h3>新增工地信息</h3>
+												</div>
+												<div class="modal-body">
+													<form class="form-horizontal" method="post" id="addBuildingsiteForm" action="addBuildingsite.html">
+														<div class="control-group">
+															<label class="control-label">工地名称</label>
+															<div class="controls">
+																<input type="text" name="name">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">工地地址</label>
+															<div class="controls">
+																<input type="text" name="address">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">开始时间</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" value="" class="datepicker" name="starttime"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">结束时间</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" value="" class="datepicker" name="endtime"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">其他</label>
+															<div class="controls">
+																<textarea name="otherinfo"></textarea>
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<a href="javascript:$('#addBuildingsiteForm').submit();" class="btn btn-primary">保存</a>
+													<a href="javascript:closeWidget('addBuildingsiteWidget');" class="btn" data-dismiss="modal">取消</a>
+												</div>
+											</div>
+
+
+											<div class="modal hide in" id="editBuildingsiteWidget" style="display: none;" aria-hidden="false">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" onclick="closeWidget('editBuildingsiteWidget')">×</button>
+													<h3>修改工地信息</h3>
+												</div>
+												<div class="modal-body">
+													<form class="form-horizontal" method="post" id="editBuildingsiteForm" action="editBuildingsite.html">
+														<div class="control-group">
+															<label class="control-label">工地名称</label>
+															<div class="controls">
+																<input type="hidden" name="id" id="buildingsite_id">
+																<input type="text" name="name" id="buildingstie_name">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">缩写</label>
+															<div class="controls">
+																<input type="text" name="shortname" id="buildingstie_shortname">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">工地地址</label>
+															<div class="controls">
+																<input type="text" name="address" id="buildingsite_address">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">开始时间</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" class="datepicker" name="starttime" id="buildingsite_starttime"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">结束时间</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" class="datepicker" name="endtime" id="buildingsite_endtime"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">其他</label>
+															<div class="controls">
+																<textarea name="otherinfo" id="buildingsite_otherinfo"></textarea>
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<a href="javascript:$('#editBuildingsiteForm').submit();" class="btn btn-primary">保存</a>
+													<a href="javascript:closeWidget('editBuildingsiteWidget');" class="btn" data-dismiss="modal">取消</a>
+												</div>
+											</div>    
+
+
+<script src="static/js/common/paginationTools.js"></script>
+<script src="static/js/common/pageTools.js"></script>
+<script src="static/js/common/others.js"></script>
+<script src="static/js/bootstrap-datepicker.js"></script>
+<script src="static/js/bootstrap-switch.js"></script>
+<script type="text/javascript">
+			var showtype = "checkin";
+			var orderValue = "";
+			$('.datepicker').datepicker();
+			$("#buildingsiteshowtype").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state)
+			{
+				if(state == "true")
+				{
+					
+				}
+				else if(state == "false")
+				{
+					
+				}
+			});
+</script>
+
+  </body>
+</html>

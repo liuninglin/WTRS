@@ -1,0 +1,61 @@
+<input type="hidden" id="loadPageForWorkdayForAll_ordervalue" value=""/>
+
+						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline" role="grid">
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="dataTables_filter" id="DataTables_Table_0_filter">
+										<label>过滤: <input placeholder="工人名/缩写" type="text" aria-controls="DataTables_Table_0" style="width:230px;" id="workdayforall_filterValueInput"></label>
+										<a class="btn btn-info" href="javascript:loadPageForWorkdayForAll('1');">
+											搜索
+											<i class="icon-search"></i>								
+										</a>
+									</div>
+								</div>
+									
+								<div class="span3">
+									<a class="btn btn-warning" href="javascript:downloadWorkdayPageForAll();">
+											导出
+											<i class="icon-arrow-down"></i>								
+									</a>
+									<script type="text/javascript">
+									var showtype = "checkout";
+									var orderValue = "";
+									
+									function downloadWorkdayPageForAll()
+									{
+										var inputWorkdayForAllFilterValue = $("#workdayforall_filterValueInput").val();
+										
+										var form = $("<form>");   //定义一个form表单
+									    form.attr('style','display:none');   //在form表单中添加查询参数
+									    form.attr('target','');
+									    form.attr('method','post');
+									    form.attr('action',"downloadWorkdayPageForAll.html");
+									    form.html("<input type='hidden' name='fileName' value='a.txt'/><input type='hidden' name='currentPage' value='1'/><input type='hidden' name='pageSize' value='10'/>"
+									     + "<input type='hidden' name='filterValue' value='"+inputWorkdayForAllFilterValue+"'/><input type='hidden' name='orderValue' value=''/></form>");
+									    $('body').append(form);  //将表单放置在web中
+									    
+									    form.submit();   //表单提交
+									}
+									</script>
+								</div>
+								
+								<div class="span3">
+									<div id="DataTables_Table_0_length" class="dataTables_length">
+										<label style="float:right">
+											<select id="workdayforall_pageSizeSelect" size="1" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" style="width:80px;" onchange="loadPageForWorkdayForAll('${pageWidget.currentPage}')">
+												<option value="10" selected="selected">10</option>
+												<option value="20">20</option>
+												<option value="60">60</option>
+												<option value="100">100</option>
+												<option value="-1">全部</option>
+											</select>
+											 记录/页
+										</label>
+									</div>
+								</div>
+							</div>
+						
+						<div id="workdayforall_grid_div">
+						</div>
+						
+					</div>

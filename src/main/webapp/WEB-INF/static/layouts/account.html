@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>人工工时核算系统 -- 用户设置</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />    
+    
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    
+    <!-- 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet" />
+     -->
+    
+    <link href="static/css/font-awesome.css" rel="stylesheet" />
+    
+    <link href="static/css/adminia.css" rel="stylesheet" /> 
+    <link href="static/css/adminia-responsive.css" rel="stylesheet" /> 
+    
+    <link href="static/css/pages/dashboard.css" rel="stylesheet" /> 
+    
+
+	<link href="static/css/datepicker.css" rel="stylesheet" />
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+	<link href="static/css/base.css" rel="stylesheet" /> 
+	
+	<link rel="icon" href="favicon.ico" type="image/x-icon" /> 
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+	
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
+
+<body>
+	
+
+
+<#include "../widgets/header.html"/> 
+
+
+<div id="content">
+	
+	<div class="container">
+		
+		<div class="row">
+			
+			<div id="leftwidget">
+			<#include "../widgets/leftnavigation.html"/> 
+			</div>
+			
+			<div class="span9" id="rightwidget">
+				
+				<h1 class="page-title">
+					<i class="icon-chevron-left" onclick="changePage(this)" style="cursor: pointer;"></i>
+					用户设置				
+				</h1>
+				
+							<div class="tab-content">
+								<form class="form-horizontal" id="edit-profile" action="updateUser.html" onsubmit="return checkAccountForm();">
+									<fieldset>
+										
+										<div class="control-group">											
+											<label for="username" class="control-label">用户ID</label>
+											<div class="controls">
+												<input name="userid" type="text" disabled="" value="${usermanage.userid}" id="userid" class="input-large disabled">
+												<input name="userid" type="hidden" value="${usermanage.userid}"/>
+												<p class="help-block">用户ID不可修改</p>
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+										
+										<div class="control-group">											
+											<label for="firstname" class="control-label">用户名</label>
+											<div class="controls">
+												<input name="username" type="text" value="${usermanage.username}" id="username" onblur="checkusernameexist()" class="input-large">&nbsp;&nbsp;&nbsp;<i id="usernameinfoicon" class="" style=""></i>&nbsp;&nbsp;<span id="usernameinfocontent"></span>
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+										
+										<div class="control-group">											
+											<label for="lastname" class="control-label">用户类型</label>
+											<div class="controls">
+												<input type="text" disabled="" value="${usermanage.usertype}" id="usertype" class="input-large disabled">
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+										
+										<div class="control-group">											
+											<label for="lastname" class="control-label">上次登录时间</label>
+											<div class="controls">
+												<input type="text" disabled="" value="${usermanage.lastlogintime}" id="lastlogintime" class="input-large disabled">
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+										
+										<div class="control-group">											
+											<label for="lastname" class="control-label">其他信息</label>
+											<div class="controls">
+												<textarea name="otherinfo" id="otherinfo" value="${usermanage.otherinfo?if_exists}" class="input-large"></textarea>
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+										
+										<br><br>
+										
+										<div class="control-group">											
+											<label for="password1" class="control-label">密码</label>
+											<div class="controls">
+												<input type="password" value="${usermanage.password}" onblur="checkpassword()" id="password" class="input-large">
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+										
+										<div class="control-group">											
+											<label for="password2" class="control-label">确认密码</label>
+											<div class="controls">
+												<input type="hidden" name="showtype" value="1"/>
+												<input name="password" type="password" value="${usermanage.password}" onblur="checkpassword()" id="password2" class="input-large">&nbsp;&nbsp;&nbsp;<i id="passwordinfoicon" class="" style=""></i>&nbsp;&nbsp;<span id="passwordinfocontent"></span>
+											</div> <!-- /controls -->				
+										</div> <!-- /control-group -->
+											
+											<br>
+											
+										<div class="form-actions">
+											<button class="btn btn-primary" type="submit">保存</button> 
+											<button class="btn">取消</button>
+										</div> <!-- /form-actions -->
+									</fieldset>
+								</form>
+							</div>
+				
+			</div> <!-- /span9 -->
+			
+			
+		</div> <!-- /row -->
+		
+	</div> <!-- /container -->
+	
+</div> <!-- /content -->
+					
+<#include "../widgets/footer.html"/> 
+
+    
+<script src="static/js/bootstrap-datepicker.js"></script>
+<script src="static/js/widgets/usermanage.js"></script>
+<script src="static/js/common/pageTools.js"></script>
+
+  </body>
+</html>

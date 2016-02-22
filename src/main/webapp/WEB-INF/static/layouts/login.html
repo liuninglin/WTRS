@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>人工工时核算系统 -- 登录</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />    
+    
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    
+    <!-- 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet" />
+     -->
+    
+    <link href="static/css/font-awesome.css" rel="stylesheet" />
+    
+    <link href="static/css/adminia.css" rel="stylesheet" /> 
+    <link href="static/css/adminia-responsive.css" rel="stylesheet" /> 
+    
+    <link href="static/css/pages/login.css" rel="stylesheet" /> 
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+	<link href="static/css/base.css" rel="stylesheet" /> 
+	
+	<link href="static/css/select2.css" rel="stylesheet" /> 
+	
+	<link rel="icon" href="favicon.ico" type="image/x-icon" /> 
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+	
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
+	
+	<#if message??>
+		<link href="static/css/bootstrap-modal.css" rel="stylesheet" /> 
+	</#if>
+<body>
+
+	<#if message??>
+	    <div id="static" class="modal hide fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+		    <div class="modal-header">
+		    	<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+			   	<h2 style="color: #F89406;"><i class="icon-warning-sign"></i>警告</h2>
+			</div>
+		    <div class="modal-body">
+		    <p>${message}</p>
+		    </div>
+		    <div class="modal-footer">
+			    <button type="button" data-dismiss="modal" class="btn btn-success">确定</button>
+		    </div>
+	    </div>
+	</#if>
+	
+	
+	
+	
+	
+	
+	
+	
+<div class="navbar navbar-fixed-top">
+	
+	<div class="navbar-inner">
+		
+		<div class="container">
+			
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 				
+			</a>
+			
+			<a class="brand" href="./">人工工时核算系统</a>
+			
+		</div> <!-- /container -->
+		
+	</div> <!-- /navbar-inner -->
+	
+</div> <!-- /navbar -->
+
+
+<div id="login-container">
+	
+	
+	<div id="login-header">
+		
+		<h3>登录</h3>
+		
+	</div> <!-- /login-header -->
+	<div id="login-content" class="clearfix">
+	
+			<form action="loginUser.html">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="username">用户名</label>
+						<div class="controls">
+							<input type="text" class="" id="username" name="username" value="${login_username!}"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">密码</label>
+						<div class="controls">
+							<input type="password" class="" id="password" name="password" value="${login_password!}"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="project">工程选择</label>
+						<div class="controls">
+							<input type="text" class="" id="projectInput" name="project" style="width:68%" value="${login_projectId!}"/>
+							<input style="width:30%;margin-top:-1%;" type="button" value="新增工程" class="btn btn-info" onclick="showAddProjectWidget()"/>
+						</div>
+					</div>
+				</fieldset>
+				
+				<div id="remember-me" class="pull-left">
+					<#if login_username??>
+						<input type="hidden" id="remembervalue" name="remembervalue" value="1"/>
+						<input checked="checked" type="checkbox" name="remember" id="remember" onchange="changeRemember(this)"/>
+					<#else>
+						<input type="hidden" id="remembervalue" name="remembervalue" value="0"/>
+						<input type="checkbox" name="remember" id="remember" onchange="changeRemember(this)"/>
+					</#if>
+					
+					<label id="remember-label" for="remember">记住密码及所选工程</label>
+				</div>
+				
+				<div class="pull-right">
+					<button type="submit" class="btn btn-warning btn-large">
+						登录
+					</button>
+				</div>
+			</form>
+			
+		</div> <!-- /login-content -->
+	
+</div> <!-- /login-wrapper -->
+
+											<div class="modal hide in" id="addProjectWidget" style="display: none;" aria-hidden="false">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" onclick="closeWidget('addProjectWidget')">×</button>
+													<h3>新增工程信息</h3>
+												</div>
+												<div class="modal-body">
+													<form class="form-horizontal" method="post" id="addProjectForm" >
+														<div class="control-group">
+															<label class="control-label">工程名</label>
+															<div class="controls">
+																<input type="text" name="name" id="project_add_name">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">开始时间</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" value="" class="datepicker" name="starttime" id="project_add_starttime"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">结束时间</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" value="" class="datepicker" name="endtime" id="project_add_endtime"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">其他</label>
+															<div class="controls">
+																<textarea name="otherinfo" id="project_add_otherinfo"></textarea>
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<a href="javascript:addProject('login')" class="btn btn-primary">保存</a>
+													<a href="javascript:closeWidget('addProjectWidget');" class="btn" data-dismiss="modal">取消</a>
+												</div>
+											</div>
+											
+											
+											
+											<div class="modal-backdrop  in" style="display: none;" id="backgroundDiv"></div>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="static/js/jquery-1.7.2.min.js"></script>
+<script src="static/js/bootstrap.js"></script>
+<script src="static/js/select2.min.js"></script>
+<script src="static/js/select2_locale_zh-CN.js"></script>
+<script src="static/js/common/pageTools.js"></script>
+<script src="static/js/widgets/project.js"></script>
+
+<#if message??>
+		<script src="static/js/bootstrap-modalmanager.js"></script>
+	    <script src="static/js/bootstrap-modal.js"></script>
+	    <script type="text/javascript">
+	    $("#static").modal({keyboard:true});
+	    </script>
+</#if>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	if("${login_projectName!}" != "")
+	{
+		$("#projectInput").select2("data", {id: "${login_projectId!}", text: "${login_projectName!}"});
+		$(".select2-choice").find("span").text("${login_projectName!}");
+	}
+});
+
+
+function changeRemember(tag)
+{
+	if(tag.checked)
+	{
+		$("#remembervalue").val("1");
+	}
+	else
+	{
+		$("#remembervalue").val("0");
+	}
+}
+
+			function resultFormatSelection(item) { 
+				var itemFmt = item.name + "";  
+				return itemFmt;  
+    		}  
+			function formatAsTextForBuildingsite(item){
+				var itemFmt ="<div style='display:inline;'>"+item.name+"</div><div style='float:right;color:#4F4F4F;display:inline'></div>";
+				return itemFmt;  
+			}
+			function formatAsText(item){  
+				var itemFmt ="<div style='display:inline;'>"+item.name+"</div><div style='float:right;color:#4F4F4F;display:inline'>"+item.starttime+"---"+item.endtime+"</div>";
+			    return itemFmt;  
+			}  
+			$("#projectInput").select2({
+				placeholder:"输入缩写查找工程",//文本框的提示信息  
+			    minimumInputLength:0,   //至少输入n个字符，才去加载数据  
+			    allowClear: true,   //是否允许用户清除文本信息  
+			    ajax:{  
+			        url:'getProjectListByFilterValue.html',    //地址  
+			        dataType:'json',    //接收的数据类型  
+			        data: function (term, pageNo) {     //在查询时向服务器端传输的数据  
+			            term = $.trim(term);  
+			                    return {  
+			                         filterValue: encodeURI(term)
+			                     }  
+			        },  
+			        results:function(data,pageNo){
+			        	if(data.projectArray[0].length > 0)
+						{
+			        		return{
+			        			results:data.projectArray[0]
+			        		};
+						}
+			        	else
+			        	{
+			        		return{
+			        			results:data
+			        		};
+			        	}
+			        }  
+			    },
+			    initSelection:function(element,callback){           //初始化，其中doName是自定义的一个属性，用来存放text的值  
+               		var id=$(element).val();  
+               		var text=$(element).attr("doName");  
+               		if(id!=''&&text!=""){  
+                    	callback({id:id,text:text});  
+               		}  
+        		},  
+        		formatSelection: resultFormatSelection,
+    			formatResult: formatAsText  //渲染查询结果项 
+			});
+</script>
+
+  </body>
+</html>

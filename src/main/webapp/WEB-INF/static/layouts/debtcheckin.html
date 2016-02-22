@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>人工工时核算系统 -- 预借款录入</title>
+
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+
+		<link href="static/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+
+		<!-- 
+		<link
+			href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+			rel="stylesheet" />
+		 -->	
+			
+		<link href="static/css/font-awesome.css" rel="stylesheet" />
+
+		<link href="static/css/adminia.css" rel="stylesheet" />
+		<link href="static/css/adminia-responsive.css" rel="stylesheet" />
+
+		<link href="static/css/pages/dashboard.css" rel="stylesheet" />
+		
+		<link href="static/css/datepicker.css" rel="stylesheet" />
+
+		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+		<link href="static/css/base.css" rel="stylesheet" /> 
+
+		<link rel="icon" href="favicon.ico" type="image/x-icon" /> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<body>
+
+
+
+		<#include "../widgets/header.html"/>
+
+
+		<div id="content">
+	
+	<div class="container">
+		
+		<div class="row">
+			
+			<div id="leftwidget">
+			<#include "../widgets/leftnavigation.html"/> 
+			</div>
+			
+			<div class="span9" id="rightwidget">
+				<h1 class="page-title">
+					<i class="icon-chevron-left" onclick="changePage(this)" style="cursor: pointer;"></i>
+					预借款录入		
+				</h1>
+				
+				<div class="container-fluid">
+					<div class="row-fluid">
+						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline" role="grid">
+							<div class="row-fluid">
+								<div class="span6">
+									<div class="dataTables_filter" id="DataTables_Table_0_filter">
+										<label>过滤: <input placeholder="工人名/缩写" type="text" aria-controls="DataTables_Table_0" style="width:230px;" id="filterValueInput"></label>
+										<a class="btn btn-info" href="javascript:loadPage(ajaxUrl,'${pageWidget.currentPage}','${pageWidget.totalPages}',ajaxDivId);">
+											搜索
+											<i class="icon-search"></i>								
+										</a>
+									</div>
+								</div>
+								
+								
+								<div class="span3">
+									<a class="btn btn-success" href="javascript:openWidget('addDebtWidget');">
+											新增
+											<i class="icon-plus"></i>								
+									</a>
+											<div class="modal hide in" id="addDebtWidget" style="display: none;" aria-hidden="false">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" onclick="closeWidget('addDebtWidget')">×</button>
+													<h3>新增预借款信息</h3>
+												</div>
+												<div class="modal-body">
+													<form class="form-horizontal" method="post" id="addDebtForm" action="addDebt.html">
+														<div class="control-group">
+															<label class="control-label">工人姓名</label>
+															<div class="controls">
+																<input type="text" id="builderidInput" style="width: 220px;" name="builderid"> 
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">预借款金额</label>
+															<div class="controls">
+																<input type="text" name="debtmoney" class="mask-num">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">预借款日期</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" value="" class="datepicker" name="debtdate"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">其他</label>
+															<div class="controls">
+																<textarea name="otherinfo"></textarea>
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<a href="javascript:$('#addDebtForm').submit();" class="btn btn-primary">保存</a>
+													<button type="button" data-dismiss="modal" class="btn">取消</button>
+												</div>
+											</div>
+									
+									
+									
+									<a class="btn btn-danger" href="javascript:deleteEntryByIds('','removeDebts.html','builderIds');">
+											多选删除
+											<i class="icon-remove"></i>		
+									</a>
+								</div>
+								
+								<div class="span3">
+									<div id="DataTables_Table_0_length" class="dataTables_length">
+										<label style="float:right">
+											<select id="pageSizeSelect" size="1" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" style="width:80px;" onchange="changePageSize('${pageWidget.currentPage}','${pageWidget.totalPages}')">
+												<option value="10" selected="selected">10</option>
+												<option value="25">25</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+											 记录/页
+										</label>
+									</div>
+								</div>
+							</div>
+						
+						<input type="hidden" id="loadPageForDebt_ordervalue" value=""/>
+						
+						<div id="debtcheckin_grid_div">
+						<#include "../grids/debtcheckin_grid.html"/> 
+						</div>
+						
+					</div>
+				</div>
+			</div> <!-- /span9 -->
+			
+			
+		</div> <!-- /row -->
+		
+	</div> <!-- /container -->
+	
+</div> <!-- /content -->
+					
+</div>
+
+<#include "../widgets/footer.html"/> 
+
+
+
+											<div class="modal hide in" id="editDebtWidget" style="display: none;" aria-hidden="false">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" onclick="closeWidget('editDebtWidget')">×</button>
+													<h3>修改预借款信息</h3>
+												</div>
+												<div class="modal-body">
+													<form class="form-horizontal" method="post" id="editDebtForm" action="editDebt.html">
+														<div class="control-group">
+															<label class="control-label">预借款金额</label>
+															<div class="controls">
+																<input type="hidden" name="builderid" id="debt_builderid">
+																<input type="text" name="debtmoney" id="debt_debtmoney" class="mask-num">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">预借款日期</label>
+															<div class="controls">
+																<input type="text" data-date-format="yyyy-mm-dd" class="datepicker" name="debtdate" id="debt_debtdate"/>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label">其他</label>
+															<div class="controls">
+																<textarea name="otherinfo" id="debt_otherinfo"></textarea>
+															</div>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<a href="javascript:$('#editDebtForm').submit();" class="btn btn-primary">保存</a>
+													<button type="button" data-dismiss="modal" class="btn">取消</button>
+												</div>
+											</div>
+
+
+
+<script src="static/js/bootstrap.js"></script>
+<script src="static/js/common/paginationTools.js"></script>
+<script src="static/js/common/pageTools.js"></script>
+<script src="static/js/common/others.js"></script>
+<script src="static/js/widgets/debt.js"></script>
+<script src="static/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+			setInputNum();
+			var showtype = "checkin";
+			var orderValue = "";
+			$('.datepicker').datepicker();
+			
+			function resultFormatSelection(item) { 
+				var itemFmt = item.name + "";  
+				return itemFmt;  
+    		}  
+			function formatAsText(item){
+				if(item.type == "timework")
+				{
+					var itemFmt ="<div style='display:inline;'>"+item.name+"</div><div style='float:right;color:#4F4F4F;display:inline'>点工</div>";
+				}
+				else if(item.type == "packagework")
+				{
+					var itemFmt ="<div style='display:inline;'>"+item.name+"</div><div style='float:right;color:#4F4F4F;display:inline'>包工</div>";  
+				}
+				else if(item.type == "all")
+				{
+					var itemFmt ="<div style='display:inline;'>"+item.name+"</div><div style='float:right;color:#4F4F4F;display:inline'>点工&包工</div>";  
+				}
+				
+				return itemFmt;  
+			}  
+			$("#builderidInput").select2({
+				placeholder:"输入缩写查找工人",//文本框的提示信息  
+			    minimumInputLength:1,   //至少输入n个字符，才去加载数据  
+			    allowClear: true,   //是否允许用户清除文本信息  
+			    ajax:{  
+			        url:'getBuilderListByFilterValue.html',    //地址  
+			        dataType:'json',    //接收的数据类型  
+			        data: function (term, pageNo) {     //在查询时向服务器端传输的数据  
+			            term = $.trim(term);  
+			                    return {  
+			                         filterValue: encodeURI(term)
+			                     }  
+			        },  
+			        results:function(data,pageNo){
+			        	if(data.builderArray[0].length > 0)
+						{
+			        		return{
+			        			results:data.builderArray[0]
+			        		};
+						}
+			        	else
+			        	{
+			        		return{
+			        			results:data
+			        		};
+			        	}
+			        }  
+			    },
+			    initSelection:function(element,callback){           //初始化，其中doName是自定义的一个属性，用来存放text的值  
+               		var id=$(element).val();  
+               		var text=$(element).attr("doName");  
+               		if(id!=''&&text!=""){  
+                    	callback({id:id,text:text});  
+               		}  
+        		},  
+        		formatSelection: resultFormatSelection,
+    			formatResult: formatAsText  //渲染查询结果项 
+			});
+</script>
+
+  </body>
+</html>

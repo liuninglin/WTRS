@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>人工工时核算系统 -- 报表展示</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />    
+    
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    
+    <!-- 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet" />
+     -->
+    
+    <link href="static/css/font-awesome.css" rel="stylesheet" />
+    
+    <link href="static/css/adminia.css" rel="stylesheet" /> 
+    <link href="static/css/adminia-responsive.css" rel="stylesheet" /> 
+    
+    <link href="static/css/pages/dashboard.css" rel="stylesheet" /> 
+    
+
+	<link href="static/css/datepicker.css" rel="stylesheet" />
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+	<link href="static/css/base.css" rel="stylesheet" /> 
+	
+	<link rel="icon" href="favicon.ico" type="image/x-icon" /> 
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
+
+<body>
+	
+
+
+<#include "../widgets/header.html"/> 
+
+
+<div id="content">
+	
+	<div class="container">
+		
+		<div class="row">
+			
+			<div id="leftwidget">
+			<#include "../widgets/leftnavigation.html"/> 
+			</div>
+			
+			<div class="span9" id="rightwidget">
+				
+				<h1 class="page-title">
+					<i class="icon-chevron-left" onclick="changePage(this)" style="cursor: pointer;"></i>
+					报表展示				
+				</h1>
+				
+				<div class="stat-container">
+										
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span id="buildernum"></span>							
+							总人数						
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span id="buildingsitenum"></span>							
+							总工程数							
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span id="allmoney"></span>							
+							支出资金总额						
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+					<!--  
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span></span>							
+						</div> 				
+					</div> 
+					 -->
+					
+				</div> <!-- /stat-container -->
+				
+				
+				
+				
+				
+				
+				
+				
+					
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>各工地工时日汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/workdayformonthwidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>各工地工时月汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/workdayforyearwidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>各工地伙食费月汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/foodformonthwidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>伙食费汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/foodforallwidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>各工地包工工资汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/packageworkforbuildingsitewidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>包工工资汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/packageworkforallwidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>点工工资汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/workdayforallwidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+						
+						<div class="widget">
+							
+							<div class="widget-header">
+								<h3>工资分配汇总</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<#include "../widgets/distributioninfowidget.html"/>							
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+				
+			</div> <!-- /span9 -->
+			
+			
+		</div> <!-- /row -->
+		
+	</div> <!-- /container -->
+	
+</div> <!-- /content -->
+					
+<#include "../widgets/footer.html"/> 
+
+    
+
+
+<script src="static/js/common/paginationTools.js"></script>
+<script src="static/js/common/pageTools.js"></script>
+<script src="static/js/common/others.js"></script>
+<script src="static/js/widgets/other.js"></script>
+<script src="static/js/widgets/workday.js"></script>
+<script src="static/js/widgets/food.js"></script>
+<script src="static/js/widgets/packagework.js"></script>
+<script src="static/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+			getAnalyseInfo();
+			showtype = "checkout";
+			orderValue = "";
+			$('.datepicker').datepicker();
+			getAllBuildingsitesForWorkdaySelect('formonth');
+			getAllBuildingsitesForWorkdaySelect('foryear');
+			getAllBuildingsitesForFoodSelect('formonth');
+			getAllBuildingsitesForPackageworkSelect();
+			loadPageForFoodForAll('1');
+			loadPageForPackageworkForAll('1');
+			loadPageForWorkdayForAll('1');
+			loadPageForDistributioninfo('1');
+</script>
+
+
+  </body>
+</html>

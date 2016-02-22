@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.DebtMapper">
+    <select id="getDebtList" resultMap="debtMap.debtResultMap" resultType="list">
+        <![CDATA[
+        	select tmp.builderid,tmp.buildername,tmp.debtmoney,tmp.debtdate,tmp.otherinfo from (select ROW_NUMBER() OVER() AS R,b.id as builderid,b.name as buildername,b.shortname as buildershortname,b.showtype as buildershowtype,d.debtmoney,d.debtdate,d.otherinfo,d.createtime,d.updatetime,d.projectid from debt d left join builder b on d.builderid = b.id where 1=1 order by ${orderValue}) as tmp WHERE R > #{startIndex} and R <= #{endIndex} and (tmp.buildername like #{filterValue} or tmp.buildershortname like #{filterValue}) and tmp.buildershowtype = '1' and tmp.projectid = #{projectid}
+        ]]>
+    </select>
+    
+    <insert id="addDebt" parameterType="debt">
+        insert into debt(builderid, projectid, debtmoney, debtdate, otherinfo, createtime, updatetime)
+        values(#{builderid}, #{projectid}, #{debtmoney}, #{debtdate}, #{otherinfo}, varchar(current_timestamp), varchar(current_timestamp))
+    </insert>
+    
+    <update id="editDebt" parameterType="debt">
+        update debt set
+        debtmoney = #{debtmoney},
+        otherinfo = #{otherinfo},
+        updatetime = varchar(current_timestamp)  
+        where builderid = #{builderid} and projectid = #{projectid}
+    </update>
+    
+    <delete id="removeDebts" parameterType="java.util.List">
+        delete from debt where builderid in
+          <foreach collection="idList" index="index" item="tag" open="(" separator="," close=")">
+		    #{tag}
+		  </foreach>
+		and projectid = #{projectid}
+    </delete>
+    
+    <select id="getTotalCount" resultType="int">
+        <![CDATA[
+        	select count(tmp.builderid) from (select ROW_NUMBER() OVER() AS R,b.id as builderid,b.name as buildername,b.shortname as buildershortname,b.showtype as buildershowtype,d.debtmoney,d.debtdate,d.otherinfo,d.createtime,d.updatetime,d.projectid from debt d left join builder b on d.builderid = b.id where 1=1) as tmp WHERE (tmp.buildername like #{filterValue} or tmp.buildershortname like #{filterValue}) and tmp.buildershowtype = '1' and tmp.projectid = #{projectid}
+        ]]>
+    </select>
+    
+    <select id="getDebtByBuilderId" resultType="debt">
+        <![CDATA[
+        	select b.id as builderid, b.name as buildername, d.debtmoney, d.debtdate, d.otherinfo from debt d left join builder b on d.builderid = b.id where b.id = #{builderId}
+        ]]>
+    </select>
+</mapper>

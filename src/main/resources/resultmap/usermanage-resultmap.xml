@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="usermanageMap">
+    <resultMap type="com.entity.UserManage" id="usermanageResultMap">
+        <id property="userid" column="userid"/>
+        <result property="username" column="username"/>
+        <result property="usertype" column="usertype"/>
+        <result property="password" column="password"/>
+        <result property="otherinfo" column="otherinfo"/>
+        <result property="showtype" column="showtype"/>
+        <result property="lastlogintime" column="lastlogintime"/>
+        <result property="createtime" column="createtime"/>
+        <result property="updatetime" column="updatetime"/>
+    </resultMap>
+</mapper>

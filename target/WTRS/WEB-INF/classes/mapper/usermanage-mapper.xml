@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserManageMapper">
+    <select id="checkUserManageIsExist" resultType="usermanage">
+        <![CDATA[
+            select userid,username,usertype,password,otherinfo,lastlogintime,createtime,updatetime,showtype from usermanage where username = #{username} and password = #{password} and showtype = '1'
+        ]]>
+    </select>
+    
+     <select id="checkUsernameIsExist" resultType="string">
+        <![CDATA[
+            select userid from usermanage where username = #{username} and userid != #{userid}
+        ]]>
+    </select>
+    
+    <insert id="addUserManage" parameterType="usermanage">
+        insert into usermanage(username, usertype, password, otherinfo, showtype, createtime, updatetime)
+        values(#{username}, #{usertype}, #{password}, #{otherinfo}, #{showtype}, varchar(current_timestamp), varchar(current_timestamp))
+    </insert>
+    
+    <update id="editUserManage" parameterType="usermanage">
+        update usermanage set
+        username = #{username},
+        password = #{password},
+        otherinfo = #{otherinfo},
+        showtype = #{showtype},
+        updatetime = varchar(current_timestamp)  
+        where userid = #{userid}
+    </update>
+    
+    <update id="editUserManageUpdateTime" parameterType="usermanage">
+        update usermanage set
+        lastlogintime = varchar(current_timestamp)  
+        where username = #{username}
+    </update>
+    
+    <delete id="removeUserManages" parameterType="string">
+        delete from usermanage where userid in (#{userids})
+    </delete>
+    
+    <select id="getUserByUserId" resultType="usermanage">
+        <![CDATA[
+            select userid,username,usertype,password,otherinfo,lastlogintime,createtime,updatetime,showtype from usermanage where userid = #{userid}
+        ]]>
+    </select>
+</mapper>

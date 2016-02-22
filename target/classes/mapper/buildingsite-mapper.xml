@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BuildingsiteMapper">
+    <select id="getAllBuildingsiteList" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+        	SELECT tmp.id,tmp.name,tmp.shortname,tmp.starttime,tmp.endtime,tmp.address,tmp.otherinfo,tmp.createtime,tmp.updatetime,tmp.showtype FROM ( SELECT ROW_NUMBER() OVER() AS R, id, name, shortname, starttime, endtime, address, otherinfo, createtime, updatetime, showtype FROM buildingsite where 1=1) AS tmp WHERE tmp.showtype = '1'
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteIdByBuildingsiteName" resultType="int">
+        <![CDATA[
+        	select id from buildingsite where name = #{buildingsiteName}
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteList" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+SELECT tmp1.id,
+       tmp1.name,
+       tmp1.shortname,
+       tmp1.starttime,
+       tmp1.endtime,
+       tmp1.address,
+       tmp1.otherinfo,
+       tmp1.createtime,
+       tmp1.updatetime,
+       tmp1.showtype
+FROM
+  (SELECT ROW_NUMBER() OVER() AS R,
+                       tmp.id,
+                       tmp.name,
+                       tmp.shortname,
+                       tmp.starttime,
+                       tmp.endtime,
+                       tmp.address,
+                       tmp.otherinfo,
+                       tmp.createtime,
+                       tmp.updatetime,
+                       tmp.showtype
+   FROM
+     (SELECT id,
+             name,
+             shortname,
+             starttime,
+             endtime,
+             address,
+             otherinfo,
+             createtime,
+             updatetime,
+             showtype
+      FROM buildingsite
+      WHERE 1=1
+        AND (name LIKE #{filterValue}
+             OR address LIKE #{filterValue}
+             OR shortname LIKE #{filterValue})
+        AND showtype = #{showtype}
+      ORDER BY ${orderValue}) AS tmp) AS tmp1
+WHERE R > #{startIndex}
+  AND R <= #{endIndex}
+        ]]>
+    </select>
+    
+    <insert id="addBuildingsite" parameterType="buildingsite">
+        insert into buildingsite(name, shortname, starttime, endtime, address, otherinfo, createtime, updatetime, showtype, pinyin)
+        values(#{name}, #{shortname}, #{starttime}, #{endtime}, #{address}, #{otherinfo}, varchar(current_timestamp), varchar(current_timestamp), '1', #{pinyin})
+    </insert>
+    
+    <update id="editBuildingsite" parameterType="buildingsite">
+        update buildingsite set
+        name = #{name},
+        shortname = #{shortname},
+        starttime = #{starttime},
+        endtime = #{endtime},
+        address = #{address},
+        otherinfo = #{otherinfo},
+        showtype = '1',
+        updatetime = varchar(current_timestamp)  
+        where id = #{id}
+    </update>
+    
+    <update id="removeBuildingsites" parameterType="java.util.List">
+        update buildingsite set
+        showtype = '0',
+        updatetime = varchar(current_timestamp)  
+        where id in 
+        	<foreach collection="list" index="index" item="tag" open="(" separator="," close=")">
+		    #{tag}
+		  </foreach>
+    </update>
+    
+    <update id="reStartBuildingsites" parameterType="java.util.List">
+        update buildingsite set
+        showtype = '1',
+        updatetime = varchar(current_timestamp)  
+        where id in 
+        	<foreach collection="list" index="index" item="tag" open="(" separator="," close=")">
+		    #{tag}
+		  </foreach>
+    </update>
+    
+    <select id="getTotalCount" resultType="int">
+        <![CDATA[
+        SELECT count(id)
+FROM buildingsite
+WHERE 1=1
+  AND (name LIKE #{filterValue}
+       OR address LIKE #{filterValue}
+       OR shortname LIKE #{filterValue})
+  AND showtype = #{showtype}
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteByBuildingsiteId" resultType="buildingsite">
+        <![CDATA[
+        	SELECT id, name, shortname, starttime, endtime, address, otherinfo, createtime, updatetime, showtype FROM buildingsite where id = #{buildingsiteId}
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteByBuildingsiteName" resultType="buildingsite">
+        <![CDATA[
+        	SELECT id, name, shortname, starttime, endtime, address, otherinfo, createtime, updatetime, showtype FROM buildingsite where name like #{buildingsiteName}
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteNameByBuildingsiteId" resultType="string">
+        <![CDATA[
+        	SELECT name FROM buildingsite where id = #{buildingsiteId}
+        ]]>
+    </select>
+    
+    <select id="getAllBuildingsiteListForWorkday" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+        	select distinct bs.id, bs.name, bs.shortname, bs.starttime, bs.endtime, bs.address, bs. otherinfo, bs.createtime, bs.updatetime, bs.showtype from workday w left join buildingsite bs on w.buildingsiteid = bs.id where bs.showtype = '1' and w.projectid = #{projectid}
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteListByFilterValue" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+        	select id,name,shortname from buildingsite where (shortname like #{filterValue} or name like #{filterValue}) and showtype = '1'
+        ]]>
+    </select>
+    
+    <select id="getAllBuildingsiteListForPackagework" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+        	select distinct bs.id, bs.name, bs.shortname, bs.starttime, bs.endtime, bs.address, bs. otherinfo, bs.createtime, bs.updatetime, bs.showtype from packagework w left join buildingsite bs on w.buildingsiteid = bs.id where bs.showtype = '1' and w.projectid = #{projectid}
+        ]]>
+    </select>
+    
+    <select id="getAllBuildingsiteListForFood" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+        	select distinct bs.id, bs.name, bs.shortname, bs.starttime, bs.endtime, bs.address, bs. otherinfo, bs.createtime, bs.updatetime, bs.showtype from food w left join buildingsite bs on w.buildingsiteid = bs.id where bs.showtype = '1' and w.projectid = #{projectid}
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteCountForFood" resultMap="buildingsiteMap.buildingsiteResultMap" resultType="list">
+        <![CDATA[
+        	select distinct bs.id, bs.name, bs.shortname, bs.starttime, bs.endtime, bs.address, bs. otherinfo, bs.createtime, bs.updatetime, bs.showtype from food w left join buildingsite bs on w.buildingsiteid = bs.id where bs.showtype = '1'
+        ]]>
+    </select>
+    
+    <select id="getBuildingsiteNumForAll" resultType="int">
+        <![CDATA[
+            select count(x.name) from (select distinct b.name from buildingsite b left join workday w on b.id = w.buildingsiteid left join packagework p on p.buildingsiteid = b.id left join FOOD f on f.buildingsiteid = b.id where f.projectid = #{projectid} or w.projectid = #{projectid} or p.projectid = #{projectid}) x
+        ]]>
+    </select>
+</mapper>

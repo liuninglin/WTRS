@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 别名 -->
+    <typeAliases>
+        <typeAlias type="com.entity.UserManage" alias="usermanage"/>
+        <typeAlias type="com.entity.Builder" alias="builder"/>
+        <typeAlias type="com.entity.Buildingsite" alias="buildingsite"/>
+        <typeAlias type="com.entity.Workday" alias="workday"/>
+		<typeAlias type="com.entity.WorkdayDetail" alias="workdaydetail"/>
+        <typeAlias type="com.entity.Salary" alias="salary"/>
+        <typeAlias type="com.entity.Packagework" alias="packagework"/>
+        <typeAlias type="com.entity.Debt" alias="debt"/>
+        <typeAlias type="com.entity.Food" alias="food"/>
+        <typeAlias type="com.entity.FoodDetail" alias="fooddetail"/>
+        <typeAlias type="com.entity.Project" alias="project"/>
+        <typeAlias type="com.entity.MonthEntity" alias="monthentity"/>
+    </typeAliases>
+</configuration>
